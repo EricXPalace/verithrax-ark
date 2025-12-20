@@ -3,7 +3,7 @@
 | Metadata | Details |
 | ---: | :--- |
 | **Author** | Verithrax Xeon |
-| **Status** | `Draft` / **`In Progress`** / `Implemented` |
+| **Status** | `Draft` / **In Progress** / `Implemented` |
 | **Last Updated** | 2025-12-20 |
 | **Target Platform** | Raspberry Pi 5 (ARM64) + x86_64 Hybrid Cluster |
 | **Tags** | `Homelab`, `K3s`, `Offline-First`, `Edge-Computing`, `Legacy-Compat` |
