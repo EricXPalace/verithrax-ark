@@ -46,6 +46,10 @@ Current portable solutions (laptops only) lack the resilience and scalability re
 The system follows a **Hub-and-Spoke** model where the RPi Cluster acts as the "Always-On Core" and the High-Performance Laptop acts as an "Ephemeral Worker."
 
 ```mermaid
+---
+config:
+  layout: elk
+---
 graph TD
     %% Network Layer
     Internet((Internet / 5G)) -->|WireGuard| Gateway[GL.iNet Beryl AX]
