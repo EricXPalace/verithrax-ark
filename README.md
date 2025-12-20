@@ -47,23 +47,40 @@ The system follows a **Hub-and-Spoke** model where the RPi Cluster acts as the "
 
 ```mermaid
 graph TD
-    User[Verithrax / User] -->|Wi-Fi/LAN| Gateway[GL.iNet Gateway]
-    Gateway -->|VLAN 10| CoreSwitch[Cisco 3560-CX L3]
+    %% Network Layer
+    Internet((Internet / 5G)) -->|WireGuard| Gateway[GL.iNet Beryl AX]
+    Gateway -->|VLAN 10 Trunk| CoreSwitch[Cisco 3560-CX]
     
-    subgraph "The Ark (ARM64 Core)"
-        CoreSwitch --> RPi1[RPi 5 - Master/DB]
-        CoreSwitch --> RPi2[RPi 5 - Worker/CI]
-        RPi1 <-->|Storage| NVMe[2TB Knowledge Base]
+    %% Compute Layer - The Ark
+    subgraph "The Ark (ARM64 Cluster)"
+        style CoreSwitch fill:#2D3748,stroke:#4A5568,color:#fff
+        CoreSwitch -->|PoE| RPi1[RPi 5 - Master Node]
+        CoreSwitch -->|PoE| RPi2[RPi 5 - Worker Node 1]
+        CoreSwitch -->|PoE| RPi3[RPi 5 - Worker Node 2]
+        
+        RPi1 -.->|NVMe| DB[(Vector DB / Knowledge Base)]
     end
     
-    subgraph "The Beast (x86_64 Ephemeral)"
-        CoreSwitch -->|1GbE| Laptop[ASUS GP66]
-        Laptop -.->|WoL| RPi1
+    %% Compute Layer - The Beast
+    subgraph "The Beast (x86_64 Hybrid)"
+        Laptop[ASUS GP66 - Hybrid Worker]
+        CoreSwitch -->|1GbE| Laptop
+        RPi1 -.->|WoL Magic Packet| Laptop
     end
     
-    subgraph "Legacy Zone (VLAN 99)"
-        CoreSwitch --> LegacyPC[ThinkPad X200 / XP]
+    %% Legacy Layer
+    subgraph "Legacy Containment (VLAN 99)"
+        Legacy[ThinkPad X200 / WinXP]
+        CoreSwitch -.->|ACL Restricted| Legacy
     end
+    
+    %% Services
+    classDef service fill:#f9f,stroke:#333,stroke-width:2px;
+    K3s(K3s Orchestrator):::service
+    Ollama(Gemini Jr. / Ollama):::service
+    
+    RPi1 --- K3s
+    RPi1 --- Ollama
 ```
 ### 4.2 Component Selection & Rationale (選型決策)
 | Component | Selection | Rationale (Trade-off Analysis)
