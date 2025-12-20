@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Project Verithrax Ark - Virtual Cluster Simulation
+# Description: Defines the 3-node K3s cluster topology with private networking.
+# This bypasses the external DHCP restrictions (The "IBM Dad" Constraint).
+
+Vagrant.configure("2") do |config|
+  # 使用通用的 Ubuntu 22.04 Box (模擬 RPi OS)
+  config.vm.box = "bento/ubuntu-22.04"
+  
+  # 全局資源配置 (模擬 RPi 5 的規格)
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "4096" # 4GB RAM per node (模擬 RPi 8G/16G 的輕量版)
+    vb.cpus = 2
+  end
+
+  # --- Node 1: Master (The Brain) ---
+  config.vm.define "ark-master" do |master|
+    master.vm.hostname = "ark-master"
+    # 設定私有靜態 IP，老爸的 Router 看不到這個
+    master.vm.network "private_network", ip: "10.10.10.10" 
+    
+    # 預留 Port Forwarding 給 K3s API
+    master.vm.network "forwarded_port", guest: 6443, host: 6443
+  end
+
+  # --- Node 2: Worker 1 (The Muscle) ---
+  config.vm.define "ark-worker-1" do |worker|
+    worker.vm.hostname = "ark-worker-1"
+    worker.vm.network "private_network", ip: "10.10.10.11"
+  end
+
+  # --- Node 3: Worker 2 (The Muscle) ---
+  config.vm.define "ark-worker-2" do |worker|
+    worker.vm.hostname = "ark-worker-2"
+    worker.vm.network "private_network", ip: "10.10.10.12"
+  end
+
+  # Provisioning: 這裡可以之後接 Ansible
+  # config.vm.provision "ansible" do |ansible|
+  #   ansible.playbook = "ansible/playbooks/site.yml"
+  # end
+end

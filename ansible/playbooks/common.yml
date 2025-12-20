@@ -1,0 +1,32 @@
+---
+- name: Base Configuration for Verithrax Ark Nodes
+  hosts: ark_cluster
+  become: true
+  tasks:
+    - name: Disable Swap (K8s requirement)
+      command: swapoff -a
+      when: ansible_swaptiness != 0
+
+    - name: Comment out Swap in fstab
+      replace:
+        path: /etc/fstab
+        regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+        replace: '# \1'
+
+    - name: Install System Dependencies
+      apt:
+        name:
+          - curl
+          - software-properties-common
+          - git
+          - htop # Verithrax loves monitoring
+        state: present
+        update_cache: yes
+
+    - name: Enable IPv4 Forwarding (Bridge Traffic)
+      sysctl:
+        name: net.ipv4.ip_forward
+        value: "1"
+        sysctl_set: yes
+        state: present
+        reload: yes

@@ -1,0 +1,4 @@
+---
+- import_playbook: common.yml
+- import_playbook: k3s_master.yml
+- import_playbook: k3s_worker.yml
