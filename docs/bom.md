@@ -7,12 +7,12 @@
 | **Raspberry Pi 5** | Compute | 16GB RAM, ARM64 | 🟢 Pending (On route) | Worker Node |
 | **Raspberry Pi 2 Zero W** | Compute | 512MB RAM, ARM64 | 🟢 Pending (On route) | Light Worker Node |
 | **Raspberry Pi 2 Zero W** | Compute | 512MB RAM, ARM64 | 🟢 Pending (On route) | Light Worker Node |
-| **ASUS GP66** | Compute | i7, 64GB RAM, x86 | 🟢 Existing | Hybrid Node |
-| **Cisco 3560-CX** | Network | 8-Port GE, PoE+ | 🟡 Saving money | Core Switch |
+| **ASUS GP66** | Compute | i7, 64GB RAM, x86 | 🟢 Operational | Hybrid Node |
+| **Cisco 3560-CX** | Network | 8-Port GE, PoE+ | 🟡 Planned | Core Switch |
 | **Cisco 2960-CX** | Network | 8-Port GE, PoE+ | 🟢 Pending (On route) | Sub Switch(Temporary Core) |
-| **Cisco 2960-CX** | Network | 8-Port GE, PoE+ | 🟡 Saving money | Sub Switch |
-| **NVMe SSD** | Storage | 2TB M.2 2280 | 🟢 Existing | Knowledge Base |
-| **NVMe SSD** | Storage | 2TB M.2 2280 | 🟡 Saving money | Knowledge Base |
+| **Cisco 2960-CX** | Network | 8-Port GE, PoE+ | 🟡 Planned | Sub Switch |
+| **NVMe SSD** | Storage | 2TB M.2 2280 | 🟢 Pending (Arrived, wait for mounting) | Knowledge Base |
+| **NVMe SSD** | Storage | 2TB M.2 2280 | 🟡 Planned | Knowledge Base |
 | **Pelican 1535** | Enclosure | Air Carry-On | 🟡 Planned | The "Ark" Shell |
 
 # Software
